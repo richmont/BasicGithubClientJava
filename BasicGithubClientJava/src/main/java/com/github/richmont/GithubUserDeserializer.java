@@ -10,6 +10,7 @@ public class GithubUserDeserializer {
 
     public GithubUserDeserializer(GithubApiGetUser api) {
         this.api = api;
+        this.setJsonContent(api.getJsonData());
     }
 
     public GithubUser getUser() {
@@ -38,9 +39,9 @@ public class GithubUserDeserializer {
 
     public void deserialize() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        GithubApiGetUser api = this.getApi();
         if (api.getResponseCode() == 200){
-            GithubUser user = mapper.readValue(api.getJsonData(), GithubUser.class);
+            GithubUser user = mapper.readValue(this.getJsonContent(), GithubUser.class);
+            this.setUser(user);
         }
 
     }

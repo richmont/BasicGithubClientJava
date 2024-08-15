@@ -2,6 +2,8 @@ package com.github.richmont;
 
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -51,9 +53,14 @@ class GithubUserDeserializerTest {
         assertEquals(200,mockedGithubApiGetUser.getResponseCode());
 
         GithubUserDeserializer deserializer = new GithubUserDeserializer(mockedGithubApiGetUser);
-        GithubUser user = deserializer.getUser();
-        assertEquals(user.getLogin(),"java");
-        System.out.println(user);
+        try {
+            deserializer.deserialize();
+            GithubUser user = deserializer.getUser();
+            assertEquals(user.getLogin(), "java");
+            System.out.println(user);
+        } catch (JsonProcessingException e) {
+          fail();
+        }
 
     }
 }
