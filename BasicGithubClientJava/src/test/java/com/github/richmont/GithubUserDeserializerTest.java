@@ -67,7 +67,7 @@ class GithubUserDeserializerTest {
             GithubUser user = deserializer.getUser();
             assertEquals(user.getLogin(), "java");
 
-        } catch (UserNotFound | IOException | WrongUrlException e) {
+        } catch (NotFound | IOException | WrongUrlException e) {
             fail();
         }
 
@@ -91,7 +91,7 @@ class GithubUserDeserializerTest {
             mockedGithubApiGetUserNotFound.doRequest();
         } catch (WrongUrlException | IOException e) {
             fail();
-        }catch (UserNotFound e){
+        }catch (NotFound e){
             assertTrue(true); // Pass if UserNotFound is thrown
         }
         GithubUserDeserializer deserializer = new GithubUserDeserializer(mockedGithubApiGetUserNotFound);
