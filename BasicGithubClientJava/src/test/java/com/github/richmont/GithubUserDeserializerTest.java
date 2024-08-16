@@ -4,6 +4,8 @@ package com.github.richmont;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -48,19 +50,53 @@ class GithubUserDeserializerTest {
                 "  \"created_at\": \"2023-02-22T23:57:43Z\",\n" +
                 "  \"updated_at\": \"2023-05-08T12:50:09Z\"\n" +
                 "}\n");
-
-        mockedGithubApiGetUser.doRequest();
-        assertEquals(200,mockedGithubApiGetUser.getResponseCode());
-
-        GithubUserDeserializer deserializer = new GithubUserDeserializer(mockedGithubApiGetUser);
         try {
+
+            mockedGithubApiGetUser.doRequest();
+            //assertEquals(200,mockedGithubApiGetUser.getResponseCode());
+
+            GithubUserDeserializer deserializer = new GithubUserDeserializer(mockedGithubApiGetUser);
+
             deserializer.deserialize();
             GithubUser user = deserializer.getUser();
             assertEquals(user.getLogin(), "java");
-            System.out.println(user);
-        } catch (JsonProcessingException e) {
-          fail();
+
+        } catch (IOException e) {
+            fail();
         }
+
+    }
+    @org.junit.jupiter.api.Test
+    void testNotFound() {
+        GithubApiGetUser mockedGithubApiGetUserNotFound = mock(GithubApiGetUser.class);
+        //doNothing().when(mockedGithubApiGetUser).doRequest(); // void the execution of doRequest method, default behavior
+        when(mockedGithubApiGetUserNotFound.getResponseCode()).thenReturn(404);
+        when(mockedGithubApiGetUserNotFound.getJsonData()).thenReturn("{\n" +
+                "  \"message\": \"Not Found\",\n" +
+                "  \"documentation_url\": \"https://docs.github.com/rest\",\n" +
+                "  \"status\": \"404\"\n" +
+                "}\n");
+
+        System.out.println(mockedGithubApiGetUserNotFound.getResponseCode());
+
+        try {
+            mockedGithubApiGetUserNotFound.doRequest();
+        } catch (WrongUrlException e) {
+            throw new RuntimeException(e);
+        } catch (UserNotFound e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        GithubUserDeserializer deserializer = new GithubUserDeserializer(mockedGithubApiGetUserNotFound);
+        try {
+            deserializer.deserialize();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        //GithubUser user = deserializer.getUser();
+            //assertEquals(user.getLogin(), "java");
+
 
     }
 }

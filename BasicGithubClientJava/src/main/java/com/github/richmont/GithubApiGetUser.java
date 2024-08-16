@@ -18,7 +18,7 @@ public class GithubApiGetUser {
         this.username = username;
     }
 
-    public void doRequest(){
+    public void doRequest() throws WrongUrlException,UserNotFound, IOException{
         this.buildUrl();
         try {
             URL url = new URL(this.getUrl());
@@ -26,26 +26,29 @@ public class GithubApiGetUser {
             connection.setRequestMethod("GET");
             this.setResponseCode(connection.getResponseCode());
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
+            if(this.getResponseCode() == 404){
+                throw new UserNotFound("User not found, try again");
+            }else{
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                this.setJsonData(response.toString());
             }
-            in.close();
-            this.setJsonData(response.toString());
 
-    } catch (ProtocolException e) {
-            System.out.println(e);
-    } catch (MalformedURLException e) {
-            System.out.println(e);
-    } catch (IOException e) {
-            System.out.println(e);
+
+        } catch (ProtocolException e) {
+            throw new WrongUrlException("Check your connection to Github API " + e);
+        } catch (MalformedURLException e) {
+            throw new WrongUrlException("Check username inserted and try again " + e);
+        }
     }
-    }
-    private void buildUrl(){
-        this.setUrl("https://api.github.com/users/"+this.getUsername());
+    private void buildUrl() {
+        this.setUrl("https://api.github.com/users/" + this.getUsername());
     }
 
     public String getUrl() {
