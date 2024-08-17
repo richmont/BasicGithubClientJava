@@ -253,10 +253,13 @@ public class GithubRepository {
     @Override
     public String toString() {
         return "GithubRepository{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
-                ", visibility='" + visibility + '\'' +
+                "fullName='" + fullName + '\'' +
+                ", name='" + name + '\'' +
+                ", isPrivate=" + isPrivate +
+                ", htmlUrl='" + htmlUrl + '\'' +
+                ", fork=" + fork +
+                ", archived=" + archived +
+                ", license=" + license +
                 '}';
     }
 }
