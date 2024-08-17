@@ -3,9 +3,7 @@ package com.github.richmont;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

@@ -18,6 +18,10 @@ public class GithubRepository {
     @JsonProperty("private")
     private boolean isPrivate;
 
+    @JsonProperty("owner")
+    private GithubUser owner;
+
+
     @JsonProperty("html_url")
     private String htmlUrl;
 
@@ -245,4 +249,14 @@ public class GithubRepository {
 
     @JsonProperty("license")
     private GithubLicense license;
+
+    @Override
+    public String toString() {
+        return "GithubRepository{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", visibility='" + visibility + '\'' +
+                '}';
+    }
 }
