@@ -6,15 +6,14 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        GithubApiGetUser rd = new GithubApiGetUser("!!!!!!!1212");
+        String username = args[0];
+        GithubApiGetUser rd = new GithubApiGetUser(username);
         try {
             rd.doRequest();
-        }catch(WrongUrlException |IOException| UserNotFound e){
-            System.out.println(e);
+        }catch(WrongUrlException | IOException | NotFound e){
+            throw new RuntimeException(e);
         }
-        System.out.println(rd.getResponseCode());
-        System.out.println(rd.getJsonData());
+
         GithubUserDeserializer deserializer = new GithubUserDeserializer(rd);
         try{
             deserializer.deserialize();
@@ -22,6 +21,19 @@ public class Main {
         }catch (JsonProcessingException e){
             System.out.println("Error at deserialization"+e);
         }
-        //System.out.println(deserializer.getUser());
+        GithubUser u = deserializer.getUser();
+        GithubApiGetRepository apirepo = new GithubApiGetRepository(u);
+        try {
+            apirepo.doRequest();
+        } catch (WrongUrlException | NotFound | IOException e) {
+            throw new RuntimeException(e);
+        }
+        GithubRepositoryDeserializer repodeserializer = new GithubRepositoryDeserializer(apirepo);
+        try {
+            repodeserializer.deserialize();
+            System.out.println(repodeserializer.getRepositoryList());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
