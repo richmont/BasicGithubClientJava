@@ -1,0 +1,1 @@
+JAVA_HOME=/usr/lib/jvm/graalvm-22 mvn -e -Pnative package

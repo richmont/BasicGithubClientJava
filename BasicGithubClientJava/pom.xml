@@ -29,7 +29,8 @@
             </plugin>
             <plugin>
                 <!--https://stackoverflow.com/questions/10568275/noclassdeffounderror-on-maven-dependency
-                Shade selected to resolve conflicts with multiple dependencies including same classes-->
+                Shade selected to resolve conflicts with multiple dependencies including same classes
+                https://stackoverflow.com/questions/38548271/difference-between-the-maven-assembly-plugin-maven-jar-plugin-and-maven-shade-p-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
