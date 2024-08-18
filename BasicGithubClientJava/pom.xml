@@ -27,7 +27,21 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!--https://stackoverflow.com/questions/574594/how-can-i-create-an-executable-runnable-jar-with-dependencies-using-maven-->
+            <plugin>
+                <!--https://stackoverflow.com/questions/10568275/noclassdeffounderror-on-maven-dependency
+                Shade selected to resolve conflicts with multiple dependencies including same classes-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <profiles>
