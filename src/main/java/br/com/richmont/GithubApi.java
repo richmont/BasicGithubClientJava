@@ -1,4 +1,4 @@
-package com.github.richmont;
+package br.com.richmont;
 import java.io.IOException;
 public interface GithubApi {
     public void doRequest() throws WrongUrlException, NotFound, IOException;

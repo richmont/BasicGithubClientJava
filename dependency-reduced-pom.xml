@@ -20,7 +20,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.github.richmont.Main</mainClass>
+              <mainClass>br.com.richmont.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
           </archive>

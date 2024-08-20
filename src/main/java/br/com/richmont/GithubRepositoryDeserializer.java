@@ -1,4 +1,4 @@
-package com.github.richmont;
+package br.com.richmont;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

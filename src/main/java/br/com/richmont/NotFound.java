@@ -1,4 +1,4 @@
-package com.github.richmont;
+package br.com.richmont;
 
 public class NotFound extends Exception {
     public NotFound(String message) {

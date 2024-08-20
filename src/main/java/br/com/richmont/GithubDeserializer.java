@@ -1,7 +1,4 @@
-package com.github.richmont;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+package br.com.richmont;
 
 public class GithubDeserializer {
     private String jsonContent;

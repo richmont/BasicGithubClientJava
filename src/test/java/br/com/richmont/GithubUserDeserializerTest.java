@@ -1,4 +1,4 @@
-package com.github.richmont;
+package br.com.richmont;
 
 
 
