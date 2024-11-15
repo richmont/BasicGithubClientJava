@@ -6,7 +6,13 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        String username = args[0];
+        String username = "";
+        try{
+            username = args[0];
+        }catch(ArrayIndexOutOfBoundsException e){
+            username = "java";
+        }
+
         GithubApiGetUser rd = new GithubApiGetUser(username);
         try {
             rd.doRequest();
